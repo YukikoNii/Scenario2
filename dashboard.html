@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap" rel="stylesheet">
+  
+  <title>Dashboard</title>
+ 
+</head>
+<body class="open-sans">
+
+
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <div class="bg-red-800 text-white w-64 p-4">
+        <h2 class="text-xl mb-6 pacifico-regular">Honey</h2>
+        <ul>
+          <li><a href="dashboard.html" class="block py-2 px-4 hover:bg-red-700 rounded">Price Comparison</a></li>
+          <li><a href="coupons.html" class="block py-2 px-4 hover:bg-red-700 rounded">Coupons</a></li>
+          <li><a href="statistics.html" class="block py-2 px-4 hover:bg-red-700 rounded">Statistics</a></li>
+        </ul>
+    </div>
+    
+
+    <div class="flex-1 p-6">
+        <div class="max-w-5xl mx-auto p-6 bg-gray-100 bg-opacity-80 border-2 rounded-lg shadow-lg">
+            <h2 class="text-2xl open-sans-bold text-red-800 mb-4">Price Comparison</h2>
+            <p>scrape prices and suggest the best deal, send notification when price goes down below the user set threshold</p>
+            
+            <table class="min-w-full table-auto bg-white shadow-md rounded-xl compTable">
+              <thead class="bg-red-800 text-white">
+                <tr>
+                  <th class="item py-3 px-4 text-left rounded-tl-xl">Product</th>
+                  <th class="threshold py-3 px-4 text-left">Threshold</th>
+                  <th class="py-3 px-4 text-left">Amazon</th>
+                  <th class="py-3 px-4 text-left">eBay</th>
+                  <th class="py-3 px-4 text-left rounded-tr-xl">Another Store</th>
+                </tr>
+              </thead>
+        
+              <tbody>
+                <tr>
+                  <td class="item py-3 px-4 font-semibold bg-gray-100">Macbook</td>
+                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">$900</td>
+                  <td class="py-3 px-4">$899</td>
+                  <td class="py-3 px-4">$870</td>
+                  <td class="py-3 px-4">$920</td>
+                </tr>
+                <tr>
+                  <td class="item py-3 px-4 font-semibold bg-gray-100">Bag</td>
+                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">$500</td>
+                  <td class="py-3 px-4">$499</td>
+                  <td class="py-3 px-4">$520</td>
+                  <td class="py-3 px-4">$530</td>
+                </tr>
+                <tr>
+                  <td class="item py-3 px-4 font-semibold bg-gray-100 rounded-bl-xl">Headphones</td>
+                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">$140</td>
+                  <td class="py-3 px-4">$150</td>
+                  <td class="py-3 px-4">$145</td>
+                  <td class="py-3 px-4">$160</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

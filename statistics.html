@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap" rel="stylesheet">
+  <title>Dashboard</title>
+ 
+</head>
+<body class="open-sans">
+
+
+  <div class="flex h-screen">
+    <div class="bg-red-800 text-white w-64 p-4">
+        <h2 class="text-xl mb-6 pacifico-regular">Honey</h2>
+        <ul>
+          <li><a href="dashboard.html" class="block py-2 px-4 hover:bg-red-700 rounded">Price Comparison</a></li>
+          <li><a href="coupons.html" class="block py-2 px-4 hover:bg-red-700 rounded">Coupons</a></li>
+          <li><a href="statistics.html" class="block py-2 px-4 hover:bg-red-700 rounded">Statistics</a></li>
+        </ul>
+    </div>
+
+
+    <div class="flex-1 p-6">
+        <div class="max-w-5xl mx-auto p-6 bg-gray-100 bg-opacity-80 border-2 rounded-lg shadow-lg">
+            <h2 class="text-2xl open-sans-bold text-red-800 mb-4 ">Statistics</h2>
+            
+            <table class="min-w-full table-auto bg-gray-100">
+        
+              <tbody>
+                <tr>
+                  <td class="py-3 px-4 border-black border">Amount Saved</td>
+                  <td class="py-3 px-4 border-black border">$103.5</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 border-black border">Coupons Used</td>
+                  <td class="py-3 px-4 border-black border">17</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
