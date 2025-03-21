@@ -17,14 +17,44 @@
 
   <div class="flex h-screen">
     <!-- Sidebar -->
-    <div class="bg-red-800 text-white w-64 p-4">
-        <h2 class="text-xl mb-6 pacifico-regular">Honey</h2>
-        <ul>
-          <li><a href="dashboard.html" class="block py-2 px-4 hover:bg-red-700 rounded">Price Comparison</a></li>
-          <li><a href="coupons.html" class="block py-2 px-4 hover:bg-red-700 rounded">Coupons</a></li>
-          <li><a href="statistics.html" class="block py-2 px-4 hover:bg-red-700 rounded">Statistics</a></li>
-        </ul>
-    </div>
+    <div class="sidebar bg-red-800 text-white w-64 p-4">
+      <h2 class="logo text-xl mb-6 pacifico-regular"><a href="dashboard.html">Honey</a></h2>
+      <ul>
+        <li class="hover:bg-red-700 py-2">
+          <a href="dashboard.html" class="navitem place-items-center">
+          <!-- Heroicons -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          <div class="navtext rounded">Price Comparison</div>
+        </a>
+        
+        </li>
+        <li class="hover:bg-red-700 py-2">
+          <a href="coupons.html" class="navitem place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+          </svg>            
+          <div class="navtext rounded">Coupons</div>
+          </a>
+        </li>
+        <li class="hover:bg-red-700 py-2">
+          <a href="statistics.html" class="navitem place-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+          </svg>            
+          <div href="statistics.html" class="navtext rounded">Statistics</div>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebarButton relative">
+        <div class="sidebarButtonShape">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 sidebarButtonIcon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+          </svg>
+        </div>
+      </div>
+  </div>
     
 
     <div class="flex-1 p-6">

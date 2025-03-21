@@ -23,5 +23,33 @@
       "wdth" 100;
   }
 
+  .sidebar {
+    transition: 100ms linear; 
+  }
+
+
+
+  .sidebarButtonShape {
+    position:absolute;
+    display: flex;
+    right: -2.5rem;
+    height:50px;
+    width:50px;
+    background-color: rgb(225, 149, 137);
+    border-radius: 50%;
+    justify-content:center; 
+    align-items:center; 
+  }
+  
+
+  .navitem {
+    display: grid; 
+    grid-template-columns: 1fr 6fr; 
+  }
+
+  .priceSearchBar {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+  }
 
  
