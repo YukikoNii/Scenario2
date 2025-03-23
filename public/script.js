@@ -43,7 +43,7 @@ function highlightBestDeal(thresInput, itemName) {
           cell.classList.add('bg-red-200');
 
           // In actual app, emails should be sent at a set time of the day, as it would be annoying for users to receive emails every time the price changes or every time they change the threshold. 
-          //sendEmail(itemName, cellPrice, thresPrice);
+          sendEmail(itemName, cellPrice, thresPrice);
 
       } else {
         console.log(thresInput);
