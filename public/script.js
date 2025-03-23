@@ -34,7 +34,6 @@ function highlightBestDeal(thresInput, itemName) {
 
     // Calculate the lowest price
     const minPrice = Math.min(...prices);
-    console.log(minPrice);
 
     // color the min price cell
     priceCells.forEach((cell, index) => {
@@ -46,7 +45,6 @@ function highlightBestDeal(thresInput, itemName) {
           sendEmail(itemName, cellPrice, thresPrice);
 
       } else {
-        console.log(thresInput);
         cell.classList.remove('bg-red-200');
       }
     });
