@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,112 +8,139 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap" rel="stylesheet">
-  
-  <title>Dashboard</title>
- 
-</head>
-<body class="open-sans">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap"
+    rel="stylesheet">
 
+  <title>Dashboard</title>
+
+</head>
+
+<body class="open-sans">
 
   <div class="flex h-screen">
     <!-- Sidebar -->
     <div class="sidebar bg-red-800 text-white w-64 p-4">
-        <h2 class="logo text-xl mb-6 pacifico-regular"><a href="dashboard.html">Maple</a></h2>
-        <ul>
-          <li class="hover:bg-red-700 py-2">
-            <a href="dashboard.html" class="navitem place-items-center">
+      <h2 class="logo text-xl mb-6 pacifico-regular"><a href="dashboard.html">Maple</a></h2>
+      <ul>
+        <li class="hover:bg-red-700 py-2">
+          <a href="dashboard.html" class="navitem place-items-center">
             <!-- Heroicons -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
             <div class="navtext rounded">Price Comparison</div>
           </a>
-          
-          </li>
-          <li class="hover:bg-red-700 py-2">
-            <a href="coupons.html" class="navitem place-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
-            </svg>            
-            <div class="navtext rounded">Coupons</div>
-            </a>
-          </li>
-          <li class="hover:bg-red-700 py-2">
-            <a href="statistics.html" class="navitem place-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-            </svg>            
-            <div href="statistics.html" class="navtext rounded">Statistics</div>
-            </a>
-          </li>
-        </ul>
-        <div class="sidebarButton relative">
-          <div class="sidebarButtonShape">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 sidebarButtonIcon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+        </li>
+        <li class="hover:bg-red-700 py-2">
+          <a href="coupons.html" class="navitem place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
             </svg>
-          </div>
+            <div class="navtext rounded">Coupons</div>
+          </a>
+        </li>
+        <li class="hover:bg-red-700 py-2">
+          <a href="statistics.html" class="navitem place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+            </svg>
+            <div href="statistics.html" class="navtext rounded">Statistics</div>
+          </a>
+        </li>
+        <li class="hover:bg-red-700 py-2">
+          <a href="settings.html" class="navitem place-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <div class="navtext rounded">Settings</div>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebarButton relative">
+        <div class="sidebarButtonShape">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6 sidebarButtonIcon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+          </svg>
         </div>
+      </div>
     </div>
-    
+
 
     <div class="flex-1 p-6">
-       
-        <div class="max-w-5xl mx-auto p-6 bg-gray-100 bg-opacity-80 border-2 rounded-lg shadow-lg">
-            <h2 class="text-2xl open-sans-bold text-red-800 mb-4">Price Comparison</h2>
-            <form class="priceSearchBar">
-              <input type="text" name="search" class="border-2 border-gray-200 rounded py-2 px-4 m-2 text-gray-700 leading-tight focus:outline-none focus:border-red-700">
-              <button type="submit" class="bg-red-800 hover:bg-red-700 text-white py-2 px-4 m-2 rounded focus:outline-none focus:shadow-outline">Search</button>
-            </form>
-            
-            <table class="min-w-full table-auto bg-white shadow-md rounded-xl compTable">
-              <thead class="bg-red-800 text-white">
-                <tr>
-                  <th class="item py-3 px-4 text-left rounded-tl-xl">Product</th>
-                  <th class="threshold py-3 px-4 text-left">Threshold</th>
-                  <th class="py-3 px-4 text-left">Amazon</th>
-                  <th class="py-3 px-4 text-left">eBay</th>
-                  <th class="py-3 px-4 text-left rounded-tr-xl">Another Store</th>
-                </tr>
-              </thead>
-        
-              <tbody>
-                <tr class = "compTableRow">
-                  <td class="item py-3 px-4 font-semibold bg-gray-100">Macbook</td>
-                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
-                  <input class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" name="price" value="$900">
-                  </td>
-                  <td class="py-3 px-4">$899</td>
-                  <td class="py-3 px-4">$870</td>
-                  <td class="py-3 px-4">$920</td>
-                </tr>
-                <tr class = "compTableRow">
-                  <td class="item py-3 px-4 font-semibold bg-gray-100">Bag</td>
-                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
-                    <input class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" name="price" value="$500">
-                  </td>
-                  <td class="py-3 px-4">$499</td>
-                  <td class="py-3 px-4">$520</td>
-                  <td class="py-3 px-4">$530</td>
-                </tr>
-                <tr class = "compTableRow">
-                  <td class="item py-3 px-4 font-semibold bg-gray-100 rounded-bl-xl">Headphones</td>
-                  <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
-                    <input class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" name="price" value="$140">
 
-                  </td>
-                  <td class="py-3 px-4">$150</td>
-                  <td class="py-3 px-4">$145</td>
-                  <td class="py-3 px-4">$160</td>
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
+      <div class="max-w-5xl mx-auto p-6 bg-gray-100 bg-opacity-80 border-2 rounded-lg shadow-lg">
+        <h2 class="text-2xl open-sans-bold text-red-800 mb-4">Price Comparison</h2>
+        <form class="priceSearchBar">
+          <input type="text" name="search"
+            class="border-2 border-gray-200 rounded py-2 px-4 m-2 text-gray-700 leading-tight focus:outline-none focus:border-red-700">
+          <button type="submit"
+            class="bg-red-800 hover:bg-red-700 text-white py-2 px-4 m-2 rounded focus:outline-none focus:shadow-outline">Search</button>
+        </form>
+
+        <table class="min-w-full table-auto bg-white shadow-md rounded-xl compTable">
+          <thead class="bg-red-800 text-white">
+            <tr>
+              <th class="item py-3 px-4 text-left rounded-tl-xl">Product</th>
+              <th class="threshold py-3 px-4 text-left">Threshold</th>
+              <th class="py-3 px-4 text-left">Amazon</th>
+              <th class="py-3 px-4 text-left">eBay</th>
+              <th class="py-3 px-4 text-left rounded-tr-xl">Another Store</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="compTableRow">
+              <td class="item py-3 px-4 font-semibold bg-gray-100">Macbook</td>
+              <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
+                <input
+                  class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
+                  name="price" value="$900">
+              </td>
+              <td class="py-3 px-4">$899</td>
+              <td class="py-3 px-4">$870</td>
+              <td class="py-3 px-4">$920</td>
+            </tr>
+            <tr class="compTableRow">
+              <td class="item py-3 px-4 font-semibold bg-gray-100">Bag</td>
+              <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
+                <input
+                  class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
+                  name="price" value="$500">
+              </td>
+              <td class="py-3 px-4">$499</td>
+              <td class="py-3 px-4">$520</td>
+              <td class="py-3 px-4">$530</td>
+            </tr>
+            <tr class="compTableRow">
+              <td class="item py-3 px-4 font-semibold bg-gray-100 rounded-bl-xl">Headphones</td>
+              <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
+                <input
+                  class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
+                  name="price" value="$140">
+
+              </td>
+              <td class="py-3 px-4">$150</td>
+              <td class="py-3 px-4">$145</td>
+              <td class="py-3 px-4">$160</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
 
     </div>
-
-<script src="script.js"></script>
+  </div>
+  <script src="script.js"></script>
 </body>
+
 </html>

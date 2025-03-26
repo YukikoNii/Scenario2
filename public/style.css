@@ -1,66 +1,68 @@
-
 .pacifico-regular {
-    font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
-  }
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 
-  .open-sans {
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-variation-settings:
-      "wdth" 100;
-  }
+.open-sans {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
 
-  .open-sans-bold {
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-style: normal;
-    font-variation-settings:
-      "wdth" 100;
-  }
+.open-sans-bold {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
 
-  .sidebar {
-    transition: 100ms linear; 
-  }
+.sidebar {
+  transition: 100ms linear;
+}
 
-  .sidebarButtonShape {
-    position:absolute;
-    display: flex;
-    right: -2.5rem;
-    height:50px;
-    width:50px;
-    background-color: rgb(225, 149, 137);
-    border-radius: 50%;
-    justify-content:center; 
-    align-items:center; 
-    transition: transform 0.3s ease;
-  }
+.sidebarButtonShape {
+  position: absolute;
+  display: flex;
+  right: -2.5rem;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(225, 149, 137);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
 
-  .sidebarButtonShape:hover {
-    transform: scale(1.2) rotate(180deg);  
-    cursor: pointer; 
-  }
+.sidebarButtonShape:hover {
+  transform: scale(1.2) rotate(180deg);
+  cursor: pointer;
+}
 
-  .navitem {
-    display: grid; 
-    grid-template-columns: 1fr 6fr; 
-  }
+.navitem {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+}
 
-  .priceSearchBar {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-  }
+.priceSearchBar {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
 
-  .logo {
-    color: white; /* Initial color of the logo */
-    transition: color 0.3s ease; /* Smooth transition for color change */
+.logo {
+  color: white;
+  /* Initial color of the logo */
+  transition: color 0.3s ease;
+  /* Smooth transition for color change */
 }
 
 .logo:hover {
-    transform: scale(1.05);
-    color: #ffcccb; /* Change the color when hovered */
+  transform: scale(1.05);
+  color: #ffcccb;
+  /* Change the color when hovered */
 }
