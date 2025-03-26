@@ -27,8 +27,6 @@
     transition: 100ms linear; 
   }
 
-
-
   .sidebarButtonShape {
     position:absolute;
     display: flex;
@@ -39,8 +37,13 @@
     border-radius: 50%;
     justify-content:center; 
     align-items:center; 
+    transition: transform 0.3s ease;
   }
-  
+
+  .sidebarButtonShape:hover {
+    transform: scale(1.2) rotate(180deg);  
+    cursor: pointer; 
+  }
 
   .navitem {
     display: grid; 
@@ -52,4 +55,12 @@
     grid-template-columns: 5fr 1fr;
   }
 
- 
+  .logo {
+    color: white; /* Initial color of the logo */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    color: #ffcccb; /* Change the color when hovered */
+}

@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Maple Extension",
+    "version": "1.0",
+    "description": "A Chrome extension for Maple.",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": []
+  }
