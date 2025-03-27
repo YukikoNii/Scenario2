@@ -4,16 +4,17 @@ import time
 import firebase_admin
 from firebase_admin import credentials, firestore
 from selenium import webdriver
-from datetime import datetime  
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+import os
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "serviceAccountKey.json"
 
 
 retailer = "amazon.co.uk"
 
-cred = credentials.Certificate("serviceAccountKey.json")
+cred = credentials.Certificate(os.path.join(os.getcwd(), "serviceAccountKey.json"))
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -80,6 +81,5 @@ def get_coupon_codes(ids, driver):
                 "Description": "",
             })
         
-
 
 scrape()

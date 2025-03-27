@@ -138,7 +138,7 @@ async function fetchData() {
     compTableRows.innerHTML = "";
 
     coupons_data.forEach(coupon => {
-      compTableRows.innerHTML += `<tr class="hover:bg-red-50"> <td class="item py-3 px-4 font-semibold bg-gray-100 border-r">${coupon.retailer}</td><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th> <th class="py-3 px-4">ACOUPON CODE #3</th></tr>`
+      compTableRows.innerHTML += `<tr class="hover:bg-red-50"> <td class="item py-3 px-4 font-semibold bg-gray-100 border-r">${coupon.retailer}</td><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`
     })
 
   } catch (error) {

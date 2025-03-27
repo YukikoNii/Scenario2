@@ -45,6 +45,27 @@ app.post('/sendEmail', (req, res) => {
 
 })
 
+app.post("/scrape_coupons", (req, res) => {
+  const retailer = req.body.retailer; // Extract retailer string from request
+
+  const pythonProcess = spawn("python3", ["coupon_scraper.py"]);
+
+  pythonProcess.stdout.on("data", (data) => {
+
+    console.log(`Scraper Output: ${data}`);
+  });
+
+  pythonProcess.stderr.on("data", (data) => {
+    console.error(`Scraper Error: ${data}`);
+  });
+
+  pythonProcess.on("close", (code) => {
+    if (code != 0) {
+      res.status(500).json({ error: `Scraper exited with code ${code}` });
+    }
+  });
+});
+
 app.get("/fetchData", async (req, res) => {
   try {
     const snapshot = await db.collection("coupons").get();
