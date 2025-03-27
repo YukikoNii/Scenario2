@@ -1,24 +1,31 @@
 
-var thresholds = document.querySelectorAll('.threshold');
 
+displayCouponsInDashboard();
+displayPricesInDashBoard();
 
-// Update the highlighting everytime threshold is changed
-thresholds.forEach(threshold => {
-
-  const thresInput = threshold.querySelector('.thresPrice');
-  const itemName = threshold.parentElement.querySelector('.item').innerHTML;
-  if (thresInput) {
-    thresInput.addEventListener("change", function (e) {
-      e.preventDefault();
-      highlightBestDeal(thresInput, itemName);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
+setTimeout(() => {
+  var thresholds = document.querySelectorAll('.threshold');
+  thresholds.forEach(threshold => {
+    console.log(threshold);
+    const itemName = threshold.parentElement.querySelector('.item').innerHTML;
     highlightBestDeal(threshold.querySelector('.thresPrice'), itemName);
   });
 
-});
+  thresholds.forEach(threshold => {
+
+    const thresInput = threshold.querySelector('.thresPrice');
+    const itemName = threshold.parentElement.querySelector('.item').innerHTML;
+    if (thresInput) {
+      thresInput.addEventListener("change", function (e) {
+        console.log("hello");
+        e.preventDefault();
+        highlightBestDeal(thresInput, itemName);
+      });
+    }
+
+  });
+}, 1000);
+
 
 
 // Highlight the best deal under the user-set threshold
@@ -33,6 +40,7 @@ function highlightBestDeal(thresInput, itemName) {
 
     // Calculate the lowest price
     const minPrice = Math.min(...prices);
+    console.log(minPrice);
 
     // color the min price cell
     priceCells.forEach((cell, index) => {
@@ -88,13 +96,14 @@ if (priceSearchBar) {
   priceSearchBar.addEventListener("submit", function (e) {
     // prevent the form from submitting (i.e. reloading the page)
     e.preventDefault();
-    var products = document.querySelectorAll('.compTableRow');
+    var tables = document.querySelectorAll('.compTable');
+    console.log(tables);
     var searchTerm = e.target.elements.search.value;
-    products.forEach(product => {
-      if (product.querySelector('.item').textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
-        product.style.display = "";
+    tables.forEach(table => {
+      if (table.querySelector('.productName').textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+        table.style.display = "";
       } else {
-        product.style.display = "none";
+        table.style.display = "none";
       }
     });
   });
@@ -210,7 +219,7 @@ async function displayPricesInDashBoard() {
 
           <tbody>
             <tr class="compTableRow">
-              <td class="item py-3 px-4 font-semibold bg-gray-100">${product}</td>
+              <td class="item productName py-3 px-4 font-semibold bg-gray-100">${product}</td>
               <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
                 <input
                   class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
@@ -219,7 +228,8 @@ async function displayPricesInDashBoard() {
         `
 
       Object.entries(retailers).forEach(([retailer, price]) => {
-        html += `<td class="py-3 px-4">$${price}</td>`
+        price = price.replace(/,/g, "");
+        html += `<td class="py-3 px-4">${price}</td>`
       });
 
       html +=
@@ -306,7 +316,3 @@ async function scrapePrices(product) {
     console.error("Error occured while fetching data:", error);
   }
 }
-
-
-displayCouponsInDashboard();
-displayPricesInDashBoard();
