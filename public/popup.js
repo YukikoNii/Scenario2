@@ -8,13 +8,18 @@
 // Call the function when the popup is opened
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
   const couponBtn = document.querySelector('.coupon-btn');
   couponBtn.addEventListener('click', function () {
     const websiteName = getWebsiteName();
     displayCouponsInPopup(websiteName);
 
+  })
+
+  const priceBtn = document.querySelector('.price-btn');
+  priceBtn.addEventListener('click', function () {
+    const product = document.querySelector('.product-name').value;
+    displayPricesInPopup(product);
   })
 });
 
@@ -30,7 +35,6 @@ function getWebsiteName() {
 }
 
 async function displayCouponsInPopup(retailer) {
-  console.log(retailer);
   // TODO: add function to get name of the retailer
 
   scrapeCoupons(retailer); // run the python script to scrape coupons. Data is added to the database. 
@@ -46,13 +50,26 @@ async function displayCouponsInPopup(retailer) {
 }
 
 
-// run this when a user clicks on a button in the popup or something 
-function displayPricesInPopup() {
+// run this when a user clicks on a button in the popup 
+async function displayPricesInPopup(product) {
   // TODO: add function to get product name
-  const product = "iphone 16";
 
-  scrapePrices(product); // run the python script to scrape prices. Data is added to the database. 
-  const prices_data = fetchPrices(product); // get coupons from the database, specifying the product name. 
+  await scrapePrices(product); // run the python script to scrape prices. Data is added to the database.
+  const raw_data = await fetchPrices(product); // get coupons from the database, specifying the product name. 
+  console.log(raw_data);
 
-  // TODO: get the popup component and then display the price data
+  if (raw_data) {
+    const data = raw_data[product];
+
+    if (data) {
+      const priceField = document.querySelector('.prices');
+      priceField.innerHTML = "";
+
+
+      Object.entries(data).forEach(([retailer, price]) => {
+        priceField.innerHTML += `<div>${retailer.toString().trim()} : ${price.toString().trim()}</div><br>`
+      });
+    }
+  }
+
 }
