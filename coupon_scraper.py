@@ -77,10 +77,10 @@ def get_coupon_codes(ids, driver):
         code = coupon_code_div.text 
         description = coupon_description_div.text
 
-        db.collection("coupons").add({
-                "Retailer": retailer,
-                "Code": code,
-                "Description": description,
+        db.collection("coupons").document(code).set({
+        "Retailer": retailer,
+        "Code": code,
+        "Description": description,
         })
         
 

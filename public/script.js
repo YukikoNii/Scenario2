@@ -278,7 +278,6 @@ async function scrapeCoupons(retailer) {
 
 async function scrapePrices(product) {
   try {
-    console.log(product);
     const response = await fetch("http://localhost:8080/scrapePrices", {
       method: "POST",
       headers: {

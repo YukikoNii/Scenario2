@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   couponBtn.addEventListener('click', async function () {
     if (couponTable.classList.contains('hidden')) {
-      const websiteName = await getWebsiteName(); 
+      const websiteName = await getWebsiteName();
       displayCouponsInPopup(websiteName);
       couponTable.classList.remove('hidden'); // Show the table
     } else {
@@ -34,9 +34,7 @@ function getWebsiteName() {
 }
 
 async function displayCouponsInPopup(retailer) {
-  // TODO: add function to get name of the retailer
-
-  scrapeCoupons(retailer); // run the python script to scrape coupons. Data is added to the database. 
+  await scrapeCoupons(retailer); // run the python script to scrape coupons. Data is added to the database. 
   const coupons_data = await fetchCoupons(retailer); // get coupons from the database, specifying the retailer name. 
   console.log("Fetched Coupons:", coupons_data); // Debugging log
 
