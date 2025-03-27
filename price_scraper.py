@@ -14,13 +14,15 @@ import re
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "serviceAccountKey.json"
 
 
+keyword = sys.argv[1] # First argument is the product name
+
+# Initialize firebase 
 cred = credentials.Certificate(os.path.join(os.getcwd(), "serviceAccountKey.json"))
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Set up Chrome options to run headlessly (without opening the browser window)
 def get_driver():
-    """Initialize and return the WebDriver for Chrome."""
     chrome_options = Options()
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument('--no-sandbox')
@@ -53,7 +55,7 @@ def clean_product_data(product_data):
     return cleaned_data
 
 # Function to search for a product and scrape the first link
-def scrape_price_runner(keyword):
+def scrape_prices(keyword):
     driver = get_driver()
     wait = WebDriverWait(driver, 10)
 
@@ -64,29 +66,29 @@ def scrape_price_runner(keyword):
     # Find the search bar and input the keyword
     search_box = driver.find_element(By.CLASS_NAME, "pr-1w40bwr")  
     search_box.send_keys(keyword)
-    search_box.send_keys(Keys.RETURN)  # Press 'Enter' to submit the search
-    
-    # Wait for the page to load
-    time.sleep(4)  #
-    
-    # Find the first product link in the search results
+    search_box.send_keys(Keys.RETURN)  # 'Enter' to submit
+        
+    # Search result grid 
     product_grid = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "pr-13k6084-ProductList-grid")))
 
     if product_grid:
     
         products = product_grid.find_elements(By.XPATH, "./*")
+
+        # Get first match 
         first_match = products[0]
 
         link = first_match.find_element(By.TAG_NAME, "a")
 
         href = link.get_attribute("href")
-
+        
+        # Click on the link 
         driver.get(href)  
 
         
         parent_divs = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "pr-19usnh7")))
 
-        # Loop through each parent div
+        # Loop through cards
         for parent_div in parent_divs:
             
             child_divs = parent_div.find_elements(By.CLASS_NAME, "pr-1u8qly9")
@@ -94,10 +96,13 @@ def scrape_price_runner(keyword):
             if child_divs:
                 for child in child_divs:
                     retailer = ""
+
+                    # Get retailer name from aria-label 
                     aria = child.get_attribute('aria-label')
                     if aria:
                         retailer = aria.split(" ")[0]
                     
+                    # Get price 
                     try:
                         price = child.find_element(By.CLASS_NAME, "pr-134edi3")
                         
@@ -110,7 +115,7 @@ def scrape_price_runner(keyword):
         
         product_ref = db.collection("products").document(keyword)
 
-        # Data structure to store the product name and retailer prices
+        # Data structure to store the product name and retailer prices in firebase
         product_data = {
             "product_name": keyword,
             "prices": data
@@ -118,12 +123,9 @@ def scrape_price_runner(keyword):
 
         product_ref.set(product_data)
 
-    # Close the driver
     driver.quit()
-    print("FINISHEd!!")
         
 
 
-keyword = sys.argv[1]
-scrape_price_runner(keyword)
+scrape_prices(keyword)
 
