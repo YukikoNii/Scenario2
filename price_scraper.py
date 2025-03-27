@@ -19,11 +19,23 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Set up Chrome options to run headlessly (without opening the browser window)
-chrome_options = Options()
-chrome_options.add_argument("--headless")  # Run in the background without opening the browser
+def get_driver():
+    """Initialize and return the WebDriver for Chrome."""
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("--disable-gpu")  
+    chrome_options.add_argument("window-size=1920,1080")
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_experimental_option("useAutomationExtension", False)
+    chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
-# Initialize WebDriver (make sure you have the correct path to ChromeDriver)
-driver = webdriver.Chrome(options=chrome_options)
+    prefs = {"profile.default_content_setting_values.cookies": 2}  # Block cookies
+    chrome_options.add_experimental_option("prefs", prefs)
+
+    driver = webdriver.Chrome(options=chrome_options)
+    return driver
 
 
 def clean_product_data(product_data):
@@ -42,6 +54,8 @@ def clean_product_data(product_data):
 
 # Function to search for a product and scrape the first link
 def scrape_price_runner(keyword):
+    driver = get_driver()
+    wait = WebDriverWait(driver, 10)
 
     data = {}
     # Open the PriceRunner website
@@ -53,64 +67,63 @@ def scrape_price_runner(keyword):
     search_box.send_keys(Keys.RETURN)  # Press 'Enter' to submit the search
     
     # Wait for the page to load
-    time.sleep(3)  # Adjust the sleep time if necessary (e.g., for slow loading)
+    time.sleep(4)  #
     
     # Find the first product link in the search results
-    product_grid = driver.find_element(By.CLASS_NAME, "pr-13k6084-ProductList-grid")
+    product_grid = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "pr-13k6084-ProductList-grid")))
+
+    if product_grid:
     
-    # Get the href (URL) of the first link
-    products = product_grid.find_elements(By.XPATH, "./*")
-    first_match = products[0]
+        products = product_grid.find_elements(By.XPATH, "./*")
+        first_match = products[0]
 
-    # Find the <a> tag within the first child
-    link = first_match.find_element(By.TAG_NAME, "a")
+        link = first_match.find_element(By.TAG_NAME, "a")
 
-    # Get the href attribute
-    href = link.get_attribute("href")
+        href = link.get_attribute("href")
 
-    # Print or use the href link
+        driver.get(href)  
 
-    driver.get(href)  # Replace with the target URL
-    
-    parent_divs = driver.find_elements(By.CLASS_NAME, "pr-19usnh7")
-
-    # Loop through each parent div
-    for parent_div in parent_divs:
         
-        # Find all child div elements within the current parent div
-        child_divs = parent_div.find_elements(By.CLASS_NAME, "pr-1u8qly9")
+        parent_divs = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "pr-19usnh7")))
 
-        if child_divs:
-            for child in child_divs:
-                retailer = ""
-                aria = child.get_attribute('aria-label')
-                if aria:
-                    retailer = aria.split(" ")[0]
-                price = child.find_element(By.CLASS_NAME, "pr-134edi3")
-                data[retailer] = price.text
-        else:
-            print("No child divs found.")
+        # Loop through each parent div
+        for parent_div in parent_divs:
+            
+            child_divs = parent_div.find_elements(By.CLASS_NAME, "pr-1u8qly9")
 
-    data = clean_product_data(data)
-    
-    product_ref = db.collection("products").document(keyword)
+            if child_divs:
+                for child in child_divs:
+                    retailer = ""
+                    aria = child.get_attribute('aria-label')
+                    if aria:
+                        retailer = aria.split(" ")[0]
+                    
+                    try:
+                        price = child.find_element(By.CLASS_NAME, "pr-134edi3")
+                        
+                        if price:
+                            data[retailer] = price.text
+                    except:
+                        pass 
+        
+        data = clean_product_data(data)
+        
+        product_ref = db.collection("products").document(keyword)
 
-    # Data structure to store the product name and retailer prices
-    product_data = {
-        "product_name": keyword,
-        "prices": data
-    }
+        # Data structure to store the product name and retailer prices
+        product_data = {
+            "product_name": keyword,
+            "prices": data
+        }
 
-    product_ref.set(product_data)
+        product_ref.set(product_data)
 
     # Close the driver
     driver.quit()
+    print("FINISHEd!!")
         
 
 
-# Example usage
 keyword = sys.argv[1]
 scrape_price_runner(keyword)
 
-# Close the driver after scraping
-driver.quit()
