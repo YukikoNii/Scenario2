@@ -1,5 +1,4 @@
 
-import signal
 import time
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -9,10 +8,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
+import sys 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "serviceAccountKey.json"
 
 
-retailer = "amazon.co.uk"
+retailer = sys.argv[1]  # The first argument (after the script name) will be the retailer
 
 cred = credentials.Certificate(os.path.join(os.getcwd(), "serviceAccountKey.json"))
 firebase_admin.initialize_app(cred)
@@ -79,7 +79,7 @@ def get_coupon_codes(ids, driver):
                 "Retailer": retailer,
                 "Code": code,
                 "Description": "",
-            })
+        })
         
 
 scrape()

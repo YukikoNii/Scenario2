@@ -1,4 +1,6 @@
 import time
+import firebase_admin
+from firebase_admin import credentials, firestore
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -6,6 +8,15 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import sys
+import os 
+import re 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "serviceAccountKey.json"
+
+
+cred = credentials.Certificate(os.path.join(os.getcwd(), "serviceAccountKey.json"))
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 # Set up Chrome options to run headlessly (without opening the browser window)
 chrome_options = Options()
@@ -14,8 +25,25 @@ chrome_options.add_argument("--headless")  # Run in the background without openi
 # Initialize WebDriver (make sure you have the correct path to ChromeDriver)
 driver = webdriver.Chrome(options=chrome_options)
 
+
+def clean_product_data(product_data):
+    cleaned_data = {}
+    
+    for key, value in product_data.items():
+        # Remove leading/trailing whitespaces and clean up invalid characters (like commas)
+        cleaned_key = key.strip()
+        cleaned_key = re.sub(r'[^\w\s]', '', cleaned_key)  # Remove special characters like commas, periods
+        
+        # If the cleaned key is non-empty, add it to the cleaned_data
+        if cleaned_key:
+            cleaned_data[cleaned_key] = value
+    
+    return cleaned_data
+
 # Function to search for a product and scrape the first link
 def scrape_price_runner(keyword):
+
+    data = {}
     # Open the PriceRunner website
     driver.get("https://www.pricerunner.com")
     
@@ -41,7 +69,6 @@ def scrape_price_runner(keyword):
     href = link.get_attribute("href")
 
     # Print or use the href link
-    print(href)
 
     driver.get(href)  # Replace with the target URL
     
@@ -60,17 +87,29 @@ def scrape_price_runner(keyword):
                 if aria:
                     retailer = aria.split(" ")[0]
                 price = child.find_element(By.CLASS_NAME, "pr-134edi3")
-                print(retailer, price.text)
+                data[retailer] = price.text
         else:
             print("No child divs found.")
+
+    data = clean_product_data(data)
+    
+    product_ref = db.collection("products").document(keyword)
+
+    # Data structure to store the product name and retailer prices
+    product_data = {
+        "product_name": keyword,
+        "prices": data
+    }
+
+    product_ref.set(product_data)
 
     # Close the driver
     driver.quit()
         
- 
+
 
 # Example usage
-keyword = "Apple iPhone 16 Pro Max 256GB"
+keyword = sys.argv[1]
 scrape_price_runner(keyword)
 
 # Close the driver after scraping

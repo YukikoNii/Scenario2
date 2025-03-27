@@ -7,6 +7,7 @@ const app = express();
 require('dotenv').config();
 const db = require("./firebaseConfig");
 const cors = require("cors");
+const { spawn } = require('child_process');
 
 app.use(express.json(), cors());
 
@@ -45,15 +46,11 @@ app.post('/sendEmail', (req, res) => {
 
 })
 
-app.post("/scrape_coupons", (req, res) => {
+app.post("/scrapeCoupons", (req, res) => {
   const retailer = req.body.retailer; // Extract retailer string from request
 
-  const pythonProcess = spawn("python3", ["coupon_scraper.py"]);
+  const pythonProcess = spawn("python3", ["coupon_scraper.py", retailer]);
 
-  pythonProcess.stdout.on("data", (data) => {
-
-    console.log(`Scraper Output: ${data}`);
-  });
 
   pythonProcess.stderr.on("data", (data) => {
     console.error(`Scraper Error: ${data}`);
@@ -66,21 +63,103 @@ app.post("/scrape_coupons", (req, res) => {
   });
 });
 
-app.get("/fetchData", async (req, res) => {
-  try {
-    const snapshot = await db.collection("coupons").get();
-    const data = snapshot.docs.map(doc => ({
-      id: doc.id, // Optional: Include Firestore document ID
-      retailer: doc.data().Retailer,
-      code: doc.data().Code,
-      description: doc.data().Description
-    }));
+app.post("/scrapePrices", (req, res) => {
+  const product = req.body.product; // Extract retailer string from request
 
-    res.json(data);
+  const pythonProcess = spawn("python3", ["price_scraper.py", product]);
+
+  pythonProcess.stderr.on("data", (data) => {
+    console.error(`Scraper Error: ${data}`);
+  });
+
+  pythonProcess.on("close", (code) => {
+    if (code != 0) {
+      res.status(500).json({ error: `Scraper exited with code ${code}` });
+    }
+  });
+});
+
+app.post("/fetchCoupons", async (req, res) => {
+  try {
+    const retailer = req.body.retailer;
+    console.log(retailer);
+
+    if (retailer != null) {
+      const snapshot = await db.collection("coupons").where("retailer", "==", retailer).get();
+
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id, // Optional: Include Firestore document ID
+        retailer: doc.data().Retailer,
+        code: doc.data().Code,
+        description: doc.data().Description
+      }));
+
+      res.json(data);
+    } else {
+      const snapshot = await db.collection("coupons").get();
+
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id, // Optional: Include Firestore document ID
+        retailer: doc.data().Retailer,
+        code: doc.data().Code,
+        description: doc.data().Description
+      }));
+
+      res.json(data);
+    }
+
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+app.post("/fetchPrices", async (req, res) => {
+  try {
+    const product = req.body.product;  //
+
+    let data = {};
+
+    if (product) {
+      // If product is provided, get data for that specific product
+      const productRef = db.collection("products").doc(product);
+      const productSnapshot = await productRef.get();
+
+      if (!productSnapshot.exists) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      const productData = productSnapshot.data();
+      data[product] = {};
+      for (let retailerName in productData.prices) {
+        data[product][retailerName] = productData.prices[retailerName];
+      }
+
+    } else {
+      // If no product is provided, get all products from the collection
+      const snapshot = await db.collection("products").get();
+
+      snapshot.forEach((doc) => {
+        const productData = doc.data();
+        const product = doc.id;
+        data[product] = {};
+        for (let retailerName in productData.prices) {
+          data[product][retailerName] = productData.prices[retailerName];
+        }
+      });
+
+    }
+
+    res.json(data);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");

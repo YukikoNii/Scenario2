@@ -115,7 +115,6 @@ if (emailForm) {
 
 
 
-
 function sendEmail(item, price, threshold) {
   // make post request to send email 
   fetch('http://localhost:8080/sendEmail', {
@@ -130,20 +129,184 @@ function sendEmail(item, price, threshold) {
 }
 
 // Fetching data from firebase
-async function fetchData() {
+async function fetchCoupons(retailer) {
   try {
-    const response = await fetch("http://localhost:8080/fetchData");
-    const coupons_data = await response.json();
-    const compTableRows = document.querySelector('.compTableRows');
-    compTableRows.innerHTML = "";
+    const response = await fetch("http://localhost:8080/fetchCoupons", {
+      method: "POST", // Using POST method
+      headers: {
+        "Content-Type": "application/json", // Indicate we're sending JSON data
+      },
+      body: JSON.stringify({ "retailer": retailer }) // Send retailer as JSON
+    });
 
-    coupons_data.forEach(coupon => {
-      compTableRows.innerHTML += `<tr class="hover:bg-red-50"> <td class="item py-3 px-4 font-semibold bg-gray-100 border-r">${coupon.retailer}</td><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`
-    })
+    const data = await response.json();
+    return await data;
 
   } catch (error) {
     console.error("Error occured while fetching data:", error);
   }
 }
 
-fetchData(); 
+
+// Fetching price data from firebase
+async function fetchPrices(product) {
+  try {
+    const response = await fetch("http://localhost:8080/fetchPrices", {
+      method: "POST", // Using POST method
+      headers: {
+        "Content-Type": "application/json", // Indicate we're sending JSON data
+      },
+      body: JSON.stringify({ "product": product }) // Send retailer as JSON
+    });
+
+    const data = await response.json();
+    return await data;
+
+  } catch (error) {
+    console.error("Error occured while fetching data:", error);
+  }
+}
+
+async function displayCouponsInDashboard() {
+  const coupons_data = await fetchCoupons(null);
+  console.log(coupons_data);
+  const compTableRows = document.querySelector('.compTableRows');
+  if (compTableRows) {
+    compTableRows.innerHTML = "";
+
+    coupons_data.forEach(coupon => {
+      compTableRows.innerHTML += `<tr class="hover:bg-red-50"> <td class="item py-3 px-4 font-semibold bg-gray-100 border-r">${coupon.retailer}</td><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`
+    })
+  }
+}
+
+async function displayPricesInDashBoard() {
+  const prices_data = await fetchPrices(null);
+  console.log(prices_data);
+
+  const priceCompArea = document.querySelector('.priceComparison');
+  if (priceCompArea) {
+
+    Object.entries(prices_data).forEach(([product, retailers]) => {
+      var html =
+        `
+      <div style="overflow-x: auto;">
+      <table class="min-w-full table-auto bg-white shadow-md rounded-xl compTable">
+          <thead class="bg-red-800 text-white">
+            <tr>
+              <th class="item py-3 px-4 text-left rounded-tl-xl">Product</th>
+              <th class="threshold py-3 px-4 text-left">Threshold</th>
+      `
+
+      // Loop over each retailer for the current product
+      Object.entries(retailers).forEach(([retailer, price]) => {
+        html += `<th class="py-3 px-4 text-left">${retailer}</th>`
+      });
+
+
+      html +=
+        `  </tr>
+          </thead>
+
+          <tbody>
+            <tr class="compTableRow">
+              <td class="item py-3 px-4 font-semibold bg-gray-100">${product}</td>
+              <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
+                <input
+                  class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
+                  name="price" value="$900">
+              </td>
+        `
+
+      Object.entries(retailers).forEach(([retailer, price]) => {
+        html += `<td class="py-3 px-4">$${price}</td>`
+      });
+
+      html +=
+        `  </tr>
+          </tbody>
+          </table>
+          </div>
+        `
+
+      priceCompArea.innerHTML += html;
+
+    })
+  }
+}
+
+// run this when a user clicks on a button in the popup or something 
+function displayCouponsInPopup() {
+  // TODO: add function to get name of the retailer
+  const retailer = "amazon.co.uk";
+
+  scrapeCoupons(retailer); // run the python script to scrape coupons. Data is added to the database. 
+  const coupons_data = fetchCoupons(retailer); // get coupons from the database, specifying the retailer name. 
+
+  // TODO: get the popup component 
+  const compTableRows = document.querySelector('.compTableRows');
+  compTableRows.innerHTML = "";
+
+  coupons_data.forEach(coupon => {
+    compTableRows.innerHTML += `<tr class="hover:bg-red-50"> <td class="item py-3 px-4 font-semibold bg-gray-100 border-r">${coupon.retailer}</td><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`
+  })
+}
+
+
+// run this when a user clicks on a button in the popup or something 
+function displayPricesInPopup() {
+  // TODO: add function to get product name
+  const product = "iphone 16";
+
+  scrapePrices(product); // run the python script to scrape prices. Data is added to the database. 
+  const prices_data = fetchPrices(product); // get coupons from the database, specifying the product name. 
+
+  // TODO: get the popup component and then display the price data
+}
+
+
+
+async function scrapeCoupons(retailer) {
+  try {
+    const response = await fetch("http://localhost:8080/scrapeCoupons", {
+      method: "POST", // Using POST method
+      headers: {
+        "Content-Type": "application/json", // Indicate we're sending JSON data
+      },
+      body: JSON.stringify({ "retailer": retailer }) // Send retailer as JSON
+    });
+
+    // Optionally check if the request was successful (status 200)
+    if (!response.ok) {
+      console.error("Failed to scrape coupons. Status:", response.status);
+    }
+
+  } catch (error) {
+    console.error("Error occured while fetching data:", error);
+  }
+}
+
+
+async function scrapePrices(product) {
+  try {
+    const response = await fetch("http://localhost:8080/scrapePrices", {
+      method: "POST", // Using POST method
+      headers: {
+        "Content-Type": "application/json", // Indicate we're sending JSON data
+      },
+      body: JSON.stringify({ "product": product }) // Send retailer as JSON
+    });
+
+    // Optionally check if the request was successful (status 200)
+    if (!response.ok) {
+      console.error("Failed to scrape coupons. Status:", response.status);
+    }
+
+  } catch (error) {
+    console.error("Error occured while fetching data:", error);
+  }
+}
+
+
+displayCouponsInDashboard();
+displayPricesInDashBoard();
