@@ -1,26 +1,24 @@
-
-
-
-
-
-
-
 // Call the function when the popup is opened
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const couponBtn = document.querySelector('.coupon-btn');
-  couponBtn.addEventListener('click', function () {
-    const websiteName = getWebsiteName();
-    displayCouponsInPopup(websiteName);
+  const couponTable = document.querySelector('.couponTable');
 
-  })
+  couponBtn.addEventListener('click', function () {
+    if (couponTable.classList.contains('hidden')) {
+      const websiteName = getWebsiteName();
+      displayCouponsInPopup(websiteName);
+      couponTable.classList.remove('hidden'); // Show the table
+    } else {
+      couponTable.classList.add('hidden'); // Hide the table
+    }
+  });
 
   const priceBtn = document.querySelector('.price-btn');
   priceBtn.addEventListener('click', function () {
     const product = document.querySelector('.product-name').value;
     displayPricesInPopup(product);
-  })
+  });
 });
 
 // Function to get the current tab URL

@@ -56,46 +56,102 @@
 
 .logo {
   color: white;
-  /* Initial color of the logo */
   transition: color 0.3s ease;
-  /* Smooth transition for color change */
 }
 
 .logo:hover {
   transform: scale(1.05);
   color: #ffcccb;
-  /* Change the color when hovered */
 }
 
 
 /* Basic button styles */
 .price-btn,
 .coupon-btn {
-  background-color: rgb(225, 149, 137);
-  /* Blue background */
+  background-color: rgb(155, 28, 28);
   color: white;
-  /* White text */
   font-weight: bold;
-  /* Bold text */
-  padding: 12px 24px;
-  /* Padding around the text */
+  padding: 14px 28px;
   border: none;
-  /* No border */
-  border-radius: 8px;
-  /* Rounded corners */
+  border-radius: 12px;
   cursor: pointer;
-  /* Pointer cursor on hover */
-  transition: background-color 0.3s ease;
-  /* Smooth transition for background change */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 1rem;
 }
 
 /* Button hover effect */
 .price-btn:hover,
 .coupon-btn:hover {
   background-color: rgb(243, 130, 113);
-  /* Darker blue when hovered */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+
+}
+
+.price-btn:active,
+.coupon-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .popup-logo {
   color: rgb(155, 28, 28);
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.hidden {
+  display: none; /* Hide elements with this class */
+}
+
+.mb-4 {
+  margin-bottom: 16px; /* Add spacing below */
+}
+
+.mt-4 {
+  margin-top: 16px; /* Add spacing above */
+}
+
+.couponTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  overflow: hidden; /* Prevent content overflow */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.couponTable[style*="visibility: hidden"] {
+  margin-top: 0; /* Remove gap when hidden */
+}
+
+.couponTable th,
+.couponTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.couponTable th {
+  background-color: rgb(225, 149, 137);
+  color: white;
+}
+
+.couponTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.couponTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.popup {
+  background-color: #e0e0e0; 
+  border-radius: 16px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px; 
+  max-width: 500px; 
+  margin: 0 auto; 
 }
