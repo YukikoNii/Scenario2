@@ -55,24 +55,29 @@ async function displayCouponsInPopup(retailer) {
 
 // run this when a user clicks on a button in the popup 
 async function displayPricesInPopup(product) {
-  // TODO: add function to get product name
-
   await scrapePrices(product); // run the python script to scrape prices. Data is added to the database.
-  const raw_data = await fetchPrices(product); // get coupons from the database, specifying the product name. 
+  const raw_data = await fetchPrices(product); // get prices from the database, specifying the product name.
   console.log(raw_data);
+
+  const priceField = document.querySelector('.prices');
+  priceField.innerHTML = ""; // Clear previous content
 
   if (raw_data) {
     const data = raw_data[product];
 
     if (data) {
-      const priceField = document.querySelector('.prices');
-      priceField.innerHTML = "";
-
-
+      priceField.classList.remove('hidden'); // Show the box
       Object.entries(data).forEach(([retailer, price]) => {
-        priceField.innerHTML += `<div>${retailer.toString().trim()} : ${price.toString().trim()}</div><br>`
+        priceField.innerHTML += `
+          <div>
+            <span>${retailer.toString().trim()}</span>
+            <span>${price.toString().trim()}</span>
+          </div>`;
       });
+    } else {
+      priceField.classList.add('hidden'); // Hide the box if no data
     }
+  } else {
+    priceField.classList.add('hidden'); // Hide the box if no data
   }
-
 }

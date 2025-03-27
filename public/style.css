@@ -71,7 +71,7 @@
   background-color: rgb(155, 28, 28);
   color: white;
   font-weight: bold;
-  padding: 14px 28px;
+  padding: 10px 12px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -107,11 +107,11 @@
   display: none; 
 }
 
-.mb-4 {
+.mb {
   margin-bottom: 16px; 
 }
 
-.mt-4 {
+.mt {
   margin-top: 16px; 
 }
 
@@ -119,6 +119,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
+  margin-bottom: 16px; 
   overflow: hidden; 
   transition: all 0.3s ease; 
 }
@@ -154,4 +155,74 @@
   padding: 24px; 
   max-width: 500px; 
   margin: 0 auto; 
+}
+
+.prices {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0; 
+  margin-top: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Open Sans", sans-serif; 
+  font-size: 1rem;
+  color: #444;
+}
+
+.prices div {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 12px 16px; 
+  border-bottom: 1px solid #ddd; 
+  font-size: 1.1rem; 
+  font-weight: 500; 
+  color: #333; 
+  gap: 8px; 
+  white-space: nowrap;
+}
+
+.prices div span:first-child {
+  font-weight: bold; 
+  color: rgb(155, 28, 28); 
+  flex: 1; 
+}
+
+.prices div span:last-child {
+  font-style: italic; 
+  color: #444; 
+  text-align: right; 
+}
+
+.prices div:last-child {
+  border-bottom: none; 
+}
+
+.prices div:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.prices div:hover {
+  background-color: #eaeaea; 
+  color: rgb(155, 28, 28); 
+  font-weight: bold;
+}
+
+/* Search bar*/
+.product-name {
+  width: 90%;
+  padding: 8px 12px; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.70rem; 
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto; 
+}
+
+.product-name:focus {
+  border-color: rgb(225, 149, 137);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  outline: none;
 }
