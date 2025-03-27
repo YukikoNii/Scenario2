@@ -73,12 +73,14 @@ def get_coupon_codes(ids, driver):
         driver.get(f'https://www.vouchercodes.co.uk/?rc={id}')
         time.sleep(2)
         coupon_code_div = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[contains(@data-qa, "el:code")]')))
+        coupon_description_div = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[contains(@data-qa, "el:offerTitle")]')))
         code = coupon_code_div.text 
+        description = coupon_description_div.text
 
         db.collection("coupons").add({
                 "Retailer": retailer,
                 "Code": code,
-                "Description": "",
+                "Description": description,
         })
         
 

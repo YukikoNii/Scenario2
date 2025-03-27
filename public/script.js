@@ -91,23 +91,30 @@ button.addEventListener("click", function () {
 })
 
 
-var priceSearchBar = document.querySelector('.priceSearchBar');
-if (priceSearchBar) {
-  priceSearchBar.addEventListener("submit", function (e) {
-    // prevent the form from submitting (i.e. reloading the page)
-    e.preventDefault();
-    var tables = document.querySelectorAll('.compTable');
-    console.log(tables);
-    var searchTerm = e.target.elements.search.value;
-    tables.forEach(table => {
-      if (table.querySelector('.productName').textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
-        table.style.display = "";
-      } else {
-        table.style.display = "none";
-      }
+// maybe remove the search function (not working)
+document.addEventListener("DOMContentLoaded", function () {
+
+  var priceSearchBar = document.querySelector('.priceSearchBar');
+  if (priceSearchBar) {
+    priceSearchBar.addEventListener("submit", function (e) {
+      console.log("hello");
+      // prevent the form from submitting (i.e. reloading the page)
+      e.preventDefault();
+      console.log("Form submission prevented"); // Check if this logs
+
+      var tables = document.querySelectorAll('.compTable');
+      console.log(tables);
+      var searchTerm = e.target.elements.search.value;
+      tables.forEach(table => {
+        if (table.querySelector('.productName').textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
+          table.style.display = "";
+        } else {
+          table.style.display = "none";
+        }
+      });
     });
-  });
-}
+  }
+});
 
 // saving email
 var email = 'zcabyni@ucl.ac.uk';
@@ -132,7 +139,7 @@ function sendEmail(item, price, threshold) {
     body: JSON.stringify({
       to: email,
       subject: 'Maple: Price Drop Alert',
-      text: item + ' is now available at $' + price + ', under your threshold price of $' + threshold // TODO: fix this 
+      text: item + ' is now available at £' + price + ', under your threshold price of £' + threshold // TODO: fix this 
     }),
   })
 }
@@ -212,6 +219,12 @@ async function displayPricesInDashBoard() {
         html += `<th class="py-3 px-4 text-left">${retailer}</th>`
       });
 
+      const prices = Object.values(retailers).map(price => {
+        return parseFloat(price.replace(/[^0-9.-]+/g, ''));
+      });
+
+      const minPrice = Math.min(...prices);
+
 
       html +=
         `  </tr>
@@ -223,7 +236,7 @@ async function displayPricesInDashBoard() {
               <td class="threshold py-3 px-4 font-semibold bg-gray-100 border-r">
                 <input
                   class="thresPrice border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700"
-                  name="price" value="$900">
+                  name="price" value="£${minPrice}">
               </td>
         `
 
