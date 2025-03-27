@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
 
 app.post('/sendEmail', (req, res) => {
   const { to, subject, text } = req.body;
-  console.log(to);
 
   const message = {
     to,
@@ -60,11 +59,13 @@ app.post("/scrapeCoupons", (req, res) => {
     if (code != 0) {
       res.status(500).json({ error: `Scraper exited with code ${code}` });
     }
+    res.status(200).json({ success: true });
   });
 });
 
 app.post("/scrapePrices", (req, res) => {
   const product = req.body.product; // Extract retailer string from request
+  console.log(product);
 
   const pythonProcess = spawn("python3", ["price_scraper.py", product]);
 
@@ -74,15 +75,15 @@ app.post("/scrapePrices", (req, res) => {
 
   pythonProcess.on("close", (code) => {
     if (code != 0) {
-      res.status(500).json({ error: `Scraper exited with code ${code}` });
+      res.status(500).json({ error: `price scraper exited with code ${code}` });
     }
+    res.status(200).json({ success: true });
   });
 });
 
 app.post("/fetchCoupons", async (req, res) => {
   try {
     const retailer = req.body.retailer;
-    console.log(retailer);
 
     if (retailer != null) {
       const snapshot = await db.collection("coupons").where("retailer", "==", retailer).get();
