@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const couponBtn = document.querySelector('.coupon-btn');
   const couponTable = document.querySelector('.couponTable');
 
-  couponBtn.addEventListener('click', function () {
+  couponBtn.addEventListener('click', async function () {
     if (couponTable.classList.contains('hidden')) {
-      const websiteName = getWebsiteName();
+      const websiteName = await getWebsiteName(); 
       displayCouponsInPopup(websiteName);
       couponTable.classList.remove('hidden'); // Show the table
     } else {
@@ -23,12 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to get the current tab URL
 function getWebsiteName() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const currentTab = tabs[0];
-    const currentUrl = currentTab.url; // Get the URL of the current tab
-    const websiteName = new URL(currentUrl).hostname.replace(/^www\./, '');
-    return websiteName;
-
+  return new Promise((resolve) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      const currentUrl = currentTab.url; // Get the URL of the current tab
+      const websiteName = new URL(currentUrl).hostname.replace(/^www\./, '');
+      resolve(websiteName);
+    });
   });
 }
 
@@ -37,13 +38,19 @@ async function displayCouponsInPopup(retailer) {
 
   scrapeCoupons(retailer); // run the python script to scrape coupons. Data is added to the database. 
   const coupons_data = await fetchCoupons(retailer); // get coupons from the database, specifying the retailer name. 
+  console.log("Fetched Coupons:", coupons_data); // Debugging log
+
+  if (!coupons_data || coupons_data.length === 0) {
+    console.error("No coupons found for retailer:", retailer);
+    return; // Exit if no data
+  }
 
   // TODO: get the popup component 
   const couponRows = document.querySelector('.couponRows');
   couponRows.innerHTML = "";
 
   coupons_data.forEach(coupon => {
-    couponRows.innerHTML += `<th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`
+    couponRows.innerHTML += `<tr><th class="py-3 px-4 text-left">${coupon.code}</th><th class="py-3 px-4 text-left">${coupon.description}</th></tr>`;
   })
 }
 

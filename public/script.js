@@ -1,12 +1,11 @@
 
-
+// Load data dynamically from firebase
 displayCouponsInDashboard();
 displayPricesInDashBoard();
 
 setTimeout(() => {
   var thresholds = document.querySelectorAll('.threshold');
   thresholds.forEach(threshold => {
-    console.log(threshold);
     const itemName = threshold.parentElement.querySelector('.item').innerHTML;
     highlightBestDeal(threshold.querySelector('.thresPrice'), itemName);
   });
@@ -17,7 +16,6 @@ setTimeout(() => {
     const itemName = threshold.parentElement.querySelector('.item').innerHTML;
     if (thresInput) {
       thresInput.addEventListener("change", function (e) {
-        console.log("hello");
         e.preventDefault();
         highlightBestDeal(thresInput, itemName);
       });
@@ -29,10 +27,11 @@ setTimeout(() => {
 
 
 // Highlight the best deal under the user-set threshold
-
 function highlightBestDeal(thresInput, itemName) {
   if (thresInput != undefined) {
     const priceCells = Array.from(thresInput.parentElement.parentElement.querySelectorAll('td:not(.item, .threshold)'));
+    const compTable = document.querySelector('.compTable');
+    const retailers = Array.from(compTable.querySelectorAll('th:not(.item, .threshold)'));
     const prices = priceCells.map(cell => {
       return parseInt(cell.textContent.slice(1));
     });
@@ -40,7 +39,6 @@ function highlightBestDeal(thresInput, itemName) {
 
     // Calculate the lowest price
     const minPrice = Math.min(...prices);
-    console.log(minPrice);
 
     // color the min price cell
     priceCells.forEach((cell, index) => {
@@ -48,8 +46,9 @@ function highlightBestDeal(thresInput, itemName) {
       if (cellPrice === minPrice && minPrice <= thresPrice) {
         cell.classList.add('bg-red-200');
 
-        // In actual app, emails should be sent at a set time of the day, as it would be annoying for users to receive emails every time the price changes or every time they change the threshold. 
-        //sendEmail(itemName, cellPrice, thresPrice);
+
+        // In actual app, an email should be sent at a set time of the day, as it would be annoying for users to receive emails every time the price changes or every time they change the threshold. 
+        //sendEmail(itemName, retailers[index].textContent, cellPrice, thresPrice);
 
       } else {
         cell.classList.remove('bg-red-200');
@@ -98,13 +97,10 @@ document.addEventListener("DOMContentLoaded", function () {
   var priceSearchBar = document.querySelector('.priceSearchBar');
   if (priceSearchBar) {
     priceSearchBar.addEventListener("submit", function (e) {
-      console.log("hello");
       // prevent the form from submitting (i.e. reloading the page)
       e.preventDefault();
-      console.log("Form submission prevented"); // Check if this logs
 
       var tables = document.querySelectorAll('.compTable');
-      console.log(tables);
       var searchTerm = e.target.elements.search.value;
       tables.forEach(table => {
         if (table.querySelector('.productName').textContent.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -126,13 +122,12 @@ if (emailForm) {
   emailForm.addEventListener("submit", function (e) {
     e.preventDefault();
     email = emaiLForm.elements.email.value;
-    console.log(email);
   })
 }
 
 
 
-function sendEmail(item, price, threshold) {
+function sendEmail(item, retailer, price, threshold) {
   // make post request to send email 
   fetch('http://localhost:8080/sendEmail', {
     method: 'POST',
@@ -140,7 +135,7 @@ function sendEmail(item, price, threshold) {
     body: JSON.stringify({
       to: email,
       subject: 'Maple: Price Drop Alert',
-      text: item + ' is now available at £' + price + ', under your threshold price of £' + threshold // TODO: fix this 
+      text: item + ' is now available at £' + price + ' on ' + retailer + ', under your threshold price of £' + threshold // TODO: fix this 
     }),
   })
 }
@@ -186,7 +181,6 @@ async function fetchPrices(product) {
 
 async function displayCouponsInDashboard() {
   const coupons_data = await fetchCoupons(null);
-  console.log(coupons_data);
   const compTableRows = document.querySelector('.compTableRows');
   if (compTableRows) {
     compTableRows.innerHTML = "";
@@ -199,7 +193,6 @@ async function displayCouponsInDashboard() {
 
 async function displayPricesInDashBoard() {
   const prices_data = await fetchPrices(null);
-  console.log(prices_data);
 
   const priceCompArea = document.querySelector('.priceComparison');
   if (priceCompArea) {
@@ -262,30 +255,17 @@ async function displayPricesInDashBoard() {
 
 
 
-// run this when a user clicks on a button in the popup or something 
-function displayPricesInPopup() {
-  // TODO: add function to get product name
-  const product = "iphone 16";
-
-  scrapePrices(product); // run the python script to scrape prices. Data is added to the database. 
-  const prices_data = fetchPrices(product); // get coupons from the database, specifying the product name. 
-
-  // TODO: get the popup component and then display the price data
-}
-
-
 
 async function scrapeCoupons(retailer) {
   try {
     const response = await fetch("http://localhost:8080/scrapeCoupons", {
-      method: "POST", // Using POST method
+      method: "POST",
       headers: {
-        "Content-Type": "application/json", // Indicate we're sending JSON data
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "retailer": retailer }) // Send retailer as JSON
+      body: JSON.stringify({ "retailer": retailer })
     });
 
-    // Optionally check if the request was successful (status 200)
     if (!response.ok) {
       console.error("Failed to scrape coupons. Status:", response.status);
     }
@@ -298,15 +278,15 @@ async function scrapeCoupons(retailer) {
 
 async function scrapePrices(product) {
   try {
+    console.log(product);
     const response = await fetch("http://localhost:8080/scrapePrices", {
-      method: "POST", // Using POST method
+      method: "POST",
       headers: {
-        "Content-Type": "application/json", // Indicate we're sending JSON data
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "product": product }) // Send retailer as JSON
+      body: JSON.stringify({ "product": product })
     });
 
-    // Optionally check if the request was successful (status 200)
     if (!response.ok) {
       console.error("Failed to scrape coupons. Status:", response.status);
     }

@@ -104,27 +104,27 @@
 }
 
 .hidden {
-  display: none; /* Hide elements with this class */
+  display: none; 
 }
 
 .mb-4 {
-  margin-bottom: 16px; /* Add spacing below */
+  margin-bottom: 16px; 
 }
 
 .mt-4 {
-  margin-top: 16px; /* Add spacing above */
+  margin-top: 16px; 
 }
 
 .couponTable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
-  overflow: hidden; /* Prevent content overflow */
-  transition: all 0.3s ease; /* Smooth transition */
+  overflow: hidden; 
+  transition: all 0.3s ease; 
 }
 
 .couponTable[style*="visibility: hidden"] {
-  margin-top: 0; /* Remove gap when hidden */
+  margin-top: 0; 
 }
 
 .couponTable th,
