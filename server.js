@@ -86,7 +86,7 @@ app.post("/fetchCoupons", async (req, res) => {
     const retailer = req.body.retailer;
 
     if (retailer != null) {
-      const snapshot = await db.collection("coupons").where("retailer", "==", retailer).get();
+      const snapshot = await db.collection("coupons").where("Retailer", "==", retailer).get();
 
       const data = snapshot.docs.map(doc => ({
         id: doc.id, // Optional: Include Firestore document ID
