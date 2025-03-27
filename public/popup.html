@@ -1,61 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&display=swap"
+    rel="stylesheet">
   <title>Price Comparison</title>
 </head>
+
 <body class="open-sans bg-gray-100 p-8">
 
-  <div class="max-w-5xl mx-auto bg-white p-10 rounded-lg shadow-lg">
+
+  <!--popup-->
+  <div class="popup">
     <!-- Logo -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl pacifico-regular text-red-800">Maple</h1>
+      <h1 class="popup-logo pacifico-regular">Maple</h1>
     </div>
-
-    <h2 class="text-3xl open-sans-bold text-red-800 mb-6">Price Comparison</h2>
-    <form class="priceSearchBar mb-8">
-      <input type="text" name="search" placeholder="Search for a product" class="border-2 border-gray-200 rounded py-3 px-5 w-full text-gray-700 leading-tight focus:outline-none focus:border-red-700">
-      <button type="submit" class="bg-red-800 hover:bg-red-700 text-white py-3 px-5 mt-4 rounded focus:outline-none focus:shadow-outline w-full">Search</button>
-    </form>
-    
-    <table class="min-w-full table-auto bg-gray-100 shadow-md rounded-xl compTable">
-      <thead class="bg-red-800 text-white">
+    <div class="coupon-btn">Get Coupons</div>
+    <table class="couponTable">
+      <thead>
         <tr>
-          <th class="item py-4 px-6 text-left rounded-tl-xl">Product</th>
-          <th class="py-4 px-6 text-left">Amazon</th>
-          <th class="py-4 px-6 text-left">eBay</th>
-          <th class="py-4 px-6 text-left rounded-tr-xl">Another Store</th>
+          <th class="">Code</th>
+          <th class="">Description</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="compTableRow hover:bg-red-50">
-          <td class="item py-4 px-6 font-semibold bg-gray-100">Macbook</td>
-          <td class="py-4 px-6">$899</td>
-          <td class="py-4 px-6">$870</td>
-          <td class="py-4 px-6">$920</td>
-        </tr>
-        <tr class="compTableRow hover:bg-red-50">
-          <td class="item py-4 px-6 font-semibold bg-gray-100">Bag</td>
-          <td class="py-4 px-6">$499</td>
-          <td class="py-4 px-6">$520</td>
-          <td class="py-4 px-6">$530</td>
-        </tr>
-        <tr class="compTableRow hover:bg-red-50">
-          <td class="item py-4 px-6 font-semibold bg-gray-100 rounded-bl-xl">Headphones</td>
-          <td class="py-4 px-6">$150</td>
-          <td class="py-4 px-6">$145</td>
-          <td class="py-4 px-6">$160</td>
-        </tr>
-      </tbody>   
-    </table>
-  </div>
 
+      <tbody class="couponRows">
+      </tbody>
+    </table>
+    <div class="price-btn">Compare Prices</div>
+    <div class="prices"></div>
+    <div class="name"></div>
+
+
+  </div>
+  <script src="popup.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

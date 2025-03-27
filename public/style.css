@@ -66,3 +66,36 @@
   color: #ffcccb;
   /* Change the color when hovered */
 }
+
+
+/* Basic button styles */
+.price-btn,
+.coupon-btn {
+  background-color: rgb(225, 149, 137);
+  /* Blue background */
+  color: white;
+  /* White text */
+  font-weight: bold;
+  /* Bold text */
+  padding: 12px 24px;
+  /* Padding around the text */
+  border: none;
+  /* No border */
+  border-radius: 8px;
+  /* Rounded corners */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for background change */
+}
+
+/* Button hover effect */
+.price-btn:hover,
+.coupon-btn:hover {
+  background-color: rgb(243, 130, 113);
+  /* Darker blue when hovered */
+}
+
+.popup-logo {
+  color: rgb(155, 28, 28);
+}
