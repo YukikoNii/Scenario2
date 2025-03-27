@@ -20,8 +20,6 @@ db = firestore.client()
 
 
 def get_driver():
-    """Initialize and return the WebDriver for Chrome."""
-    # ChromeDriverManager().clear_cache()
     chrome_options = Options()
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument('--no-sandbox')
@@ -38,7 +36,7 @@ def get_driver():
 
 
 
-def scrape():
+def scrape_coupons():
 
     driver = get_driver()
 
@@ -67,11 +65,10 @@ def get_ids(driver):
             yield idAttribute.split("-")[1]
 
 def get_coupon_codes(ids, driver):
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 8)
 
     for id in ids:
         driver.get(f'https://www.vouchercodes.co.uk/?rc={id}')
-        time.sleep(2)
         coupon_code_div = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[contains(@data-qa, "el:code")]')))
         coupon_description_div = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[contains(@data-qa, "el:offerTitle")]')))
         code = coupon_code_div.text 
@@ -84,4 +81,4 @@ def get_coupon_codes(ids, driver):
         })
         
 
-scrape()
+scrape_coupons()
