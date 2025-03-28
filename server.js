@@ -28,7 +28,7 @@ app.post('/sendEmail', (req, res) => {
   const message = {
     to,
     from: {
-      email: 'NIIY64308@gmail.com',
+      email: 'NIIY64308@gmail.com', // should be changed to professional email when publishing the extension
       name: 'Maple',
     },
     subject,
@@ -109,14 +109,14 @@ app.post("/fetchCoupons", async (req, res) => {
     }
 
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
 
 app.post("/fetchPrices", async (req, res) => {
   try {
-    const product = req.body.product;  //
+    const product = req.body.product;
 
     let data = {};
 
@@ -154,7 +154,7 @@ app.post("/fetchPrices", async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Server Error" });
   }
 });
 

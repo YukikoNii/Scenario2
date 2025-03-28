@@ -157,11 +157,11 @@ function sendEmail(item, retailer, price, threshold) {
 async function fetchCoupons(retailer) {
   try {
     const response = await fetch("http://localhost:8080/fetchCoupons", {
-      method: "POST", // Using POST method
+      method: "POST",
       headers: {
-        "Content-Type": "application/json", // Indicate we're sending JSON data
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "retailer": retailer }) // Send retailer as JSON
+      body: JSON.stringify({ "retailer": retailer })
     });
 
     const data = await response.json();
@@ -177,11 +177,11 @@ async function fetchCoupons(retailer) {
 async function fetchPrices(product) {
   try {
     const response = await fetch("http://localhost:8080/fetchPrices", {
-      method: "POST", // Using POST method
+      method: "POST",
       headers: {
-        "Content-Type": "application/json", // Indicate we're sending JSON data
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "product": product }) // Send retailer as JSON
+      body: JSON.stringify({ "product": product })
     });
 
     const data = await response.json();

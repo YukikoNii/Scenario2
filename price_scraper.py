@@ -44,11 +44,9 @@ def clean_product_data(product_data):
     cleaned_data = {}
     
     for key, value in product_data.items():
-        # Remove leading/trailing whitespaces and clean up invalid characters (like commas)
         cleaned_key = key.strip()
-        cleaned_key = re.sub(r'[^\w\s]', '', cleaned_key)  # Remove special characters like commas, periods
+        cleaned_key = re.sub(r'[^\w\s]', '', cleaned_key)  
         
-        # If the cleaned key is non-empty, add it to the cleaned_data
         if cleaned_key:
             cleaned_data[cleaned_key] = value
     
