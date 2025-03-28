@@ -48,7 +48,9 @@ function highlightBestDeal(thresInput, itemName) {
 
 
         // In actual app, an email should be sent at a set time of the day, as it would be annoying for users to receive emails every time the price changes or every time they change the threshold. 
-        //sendEmail(itemName, retailers[index].textContent, cellPrice, thresPrice);
+        (async () => {
+          await sendEmail(itemName, retailers[index].textContent, cellPrice, thresPrice);
+        })();
 
       } else {
         cell.classList.remove('bg-red-200');
@@ -113,31 +115,42 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// saving email
-var email = 'zcabyni@ucl.ac.uk';
 
 const emailForm = document.querySelector('.email');
 
 if (emailForm) {
   emailForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    email = emaiLForm.elements.email.value;
+    email = emailForm.elements.email.value;
+    localStorage.setItem("email", email); // Save email in local storage
   })
 }
 
 
 
 function sendEmail(item, retailer, price, threshold) {
-  // make post request to send email 
-  fetch('http://localhost:8080/sendEmail', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      to: email,
-      subject: 'Maple: Price Drop Alert',
-      text: item + ' is now available at £' + price + ' on ' + retailer + ', under your threshold price of £' + threshold // TODO: fix this 
-    }),
-  })
+  const email = localStorage.getItem("email"); // Get email from local storage
+
+  if (email) {
+    return fetch('http://localhost:8080/sendEmail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: email,
+        subject: 'Maple: Price Drop Alert',
+        text: `${item} is now available at £${price} on ${retailer}, under your threshold price of £${threshold}`
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to send email: ${response.statusText}`);
+        }
+        console.log('Email sent successfully');
+      })
+      .catch(error => {
+        console.error('Error sending email:', error);
+      });
+  }
 }
 
 // Fetching data from firebase
